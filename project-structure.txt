@@ -1,0 +1,104 @@
+school-management-system/
+│
+├── public/
+│   ├── index.html
+│   ├── favicon.ico
+│   └── assets/
+│       └── svg/                      # Store all SVG files here
+│           ├── logo.svg
+│           ├── dashboard-icon.svg
+│           ├── payments-icon.svg
+│           └── ...
+│
+├── src/
+│   ├── assets/                       # Local assets
+│   │   └── images/
+│   │
+│   ├── components/                   # Reusable UI components
+│   │   ├── common/
+│   │   │   ├── Sidebar.jsx
+│   │   │   ├── Header.jsx
+│   │   │   ├── Button.jsx
+│   │   │   ├── Card.jsx
+│   │   │   ├── Table.jsx
+│   │   │   ├── Modal.jsx
+│   │   │   ├── Alert.jsx
+│   │   │   ├── StatusBadge.jsx
+│   │   │   └── ...
+│   │   │
+│   │   ├── dashboard/
+│   │   │   ├── StatCard.jsx
+│   │   │   ├── FeeSummaryChart.jsx
+│   │   │   ├── PaymentMethodsChart.jsx
+│   │   │   ├── RecentPaymentsTable.jsx
+│   │   │   └── ...
+│   │   │
+│   │   ├── payments/
+│   │   │   ├── PaymentForm.jsx
+│   │   │   ├── PaymentList.jsx
+│   │   │   ├── PaymentReceipt.jsx
+│   │   │   └── ...
+│   │   │
+│   │   ├── students/
+│   │   │   ├── StudentForm.jsx
+│   │   │   ├── StudentList.jsx
+│   │   │   ├── StudentProfile.jsx
+│   │   │   └── ...
+│   │   │
+│   │   ├── expenses/
+│   │   │   ├── ExpenseForm.jsx
+│   │   │   ├── ExpenseList.jsx
+│   │   │   └── ...
+│   │   │
+│   │   └── reports/
+│   │       ├── FinancialReport.jsx
+│   │       ├── StudentFeeReport.jsx
+│   │       └── ...
+│   │
+│   ├── pages/                        # Page components
+│   │   ├── Dashboard.jsx
+│   │   ├── Payments.jsx
+│   │   ├── Students.jsx
+│   │   ├── Expenses.jsx
+│   │   ├── Reports.jsx
+│   │   ├── Settings.jsx
+│   │   ├── Login.jsx
+│   │   └── ...
+│   │
+│   ├── utils/                        # Utility functions
+│   │   ├── formatters.js
+│   │   ├── validators.js
+│   │   └── ...
+│   │
+│   ├── hooks/                        # Custom React hooks
+│   │   ├── useAuth.js
+│   │   ├── useSupabase.js
+│   │   └── ...
+│   │
+│   ├── contexts/                     # React contexts
+│   │   ├── AuthContext.jsx
+│   │   ├── ThemeContext.jsx
+│   │   └── ...
+│   │
+│   ├── services/                     # API services
+│   │   ├── supabase.js               # Supabase client setup
+│   │   ├── authService.js
+│   │   ├── studentService.js
+│   │   ├── paymentService.js
+│   │   ├── expenseService.js
+│   │   └── ...
+│   │
+│   ├── layouts/                      # Layout components
+│   │   ├── MainLayout.jsx
+│   │   ├── AuthLayout.jsx
+│   │   └── ...
+│   │
+│   ├── App.jsx                       # Main application component
+│   ├── index.jsx                     # Application entry point
+│   └── Router.jsx                    # Application routing
+│
+├── .gitignore
+├── package.json
+├── README.md
+├── tailwind.config.js
+└── vite.config.js                    # Using Vite for faster development

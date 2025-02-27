@@ -1,0 +1,127 @@
+# Setting Up GitHub and Vercel Integration
+
+## GitHub Repository Setup
+
+1. Create a new GitHub repository:
+   ```
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git branch -M main
+   git remote add origin https://github.com/yourusername/school-management-system.git
+   git push -u origin main
+   ```
+
+2. Add project documentation:
+   - Create a comprehensive README.md with project description, setup instructions, and features
+   - Add a LICENSE file (MIT recommended for open source)
+   - Add a CONTRIBUTING.md file if you plan to accept contributions
+
+3. Set up GitHub Actions for continuous integration (optional):
+   - Create a `.github/workflows/ci.yml` file to run tests on each push and pull request
+
+## Vercel Deployment
+
+1. Create a Vercel account if you don't already have one (https://vercel.com)
+
+2. Install the Vercel CLI:
+   ```
+   npm install -g vercel
+   ```
+
+3. Login to Vercel CLI:
+   ```
+   vercel login
+   ```
+
+4. Deploy your application:
+   ```
+   vercel
+   ```
+   
+5. Connect your GitHub repository to Vercel:
+   - Go to Vercel dashboard
+   - Click "Add New" > "Project"
+   - Select your GitHub repository
+   - Configure the build settings:
+     - Framework Preset: Vite
+     - Build Command: `npm run build`
+     - Output Directory: `dist`
+     - Install Command: `npm install`
+     - Development Command: `npm run dev`
+
+6. Environment Variables:
+   - Add your Supabase URL and Anon Key as environment variables in Vercel
+   - Go to Settings > Environment Variables
+   - Add:
+     - `VITE_SUPABASE_URL`=your_supabase_url
+     - `VITE_SUPABASE_ANON_KEY`=your_supabase_anon_key
+
+7. Configure custom domain (optional):
+   - Go to Settings > Domains
+   - Add your custom domain and follow the verification process
+
+## Supabase Setup
+
+1. Create a new Supabase project (https://supabase.com)
+
+2. Create the database tables as outlined in the schema:
+   - Users
+   - Roles
+   - Students
+   - Classes
+   - Students_Classes
+   - Fee_Types
+   - Fees
+   - Payments
+   - Expenses
+   - Expense_Types
+
+3. Configure Row Level Security policies for proper data access control
+
+4. Set up authentication:
+   - Configure email/password sign-in
+   - Configure OAuth providers (optional)
+   - Set up email templates for authentication
+
+5. Create an .env file locally (do not commit to Git):
+   ```
+   VITE_SUPABASE_URL=your_supabase_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
+
+## Development Workflow
+
+1. Create feature branches for new development:
+   ```
+   git checkout -b feature/feature-name
+   ```
+
+2. Make changes, commit, and push:
+   ```
+   git add .
+   git commit -m "Add feature: description"
+   git push origin feature/feature-name
+   ```
+
+3. Create a pull request in GitHub for review
+
+4. After review and approval, merge to main:
+   ```
+   git checkout main
+   git pull
+   git merge feature/feature-name
+   git push
+   ```
+
+5. Vercel will automatically deploy changes to the main branch
+
+## Vercel Preview Deployments
+
+Vercel automatically creates preview deployments for each pull request. This allows you to see your changes in a production-like environment before merging to main.
+
+To view a preview deployment:
+1. Create a pull request in GitHub
+2. Vercel bot will comment with a link to the preview deployment
+3. Review the changes in the preview deployment
+4. If everything looks good, merge the pull request

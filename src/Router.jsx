@@ -7,7 +7,6 @@ import AuthLayout from './layouts/AuthLayout';
 
 // Authentication Pages
 import Login from './pages/Login';
-import SignUp from './pages/SignUp';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import ChangePassword from './pages/ChangePassword';

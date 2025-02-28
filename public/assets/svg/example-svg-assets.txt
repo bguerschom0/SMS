@@ -1,0 +1,107 @@
+# SVG Assets Organization
+
+The `public/assets/svg/` directory should contain all SVG icons and images used in the application.
+Here's a suggested organization structure:
+
+## Directory Structure
+
+```
+public/assets/svg/
+│
+├── logo/
+│   ├── app-logo.svg
+│   └── logo-icon.svg
+│
+├── icons/
+│   ├── dashboard.svg
+│   ├── payments.svg
+│   ├── students.svg
+│   ├── expenses.svg
+│   ├── reports.svg
+│   ├── settings.svg
+│   └── ... (other menu icons)
+│
+├── illustrations/
+│   ├── empty-state.svg
+│   ├── welcome.svg
+│   ├── success.svg
+│   └── ... (other larger illustrations)
+│
+└── status/
+    ├── active.svg
+    ├── inactive.svg
+    ├── completed.svg
+    ├── pending.svg
+    └── ... (other status indicators)
+```
+
+## Example SVG Contents
+
+Below are examples of some key SVG files:
+
+### app-logo.svg
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60">
+  <rect x="10" y="10" width="40" height="40" rx="8" fill="#4F46E5" />
+  <path d="M22 20C22 19.4477 22.4477 19 23 19H37C37.5523 19 38 19.4477 38 20V40C38 40.5523 37.5523 41 37 41H23C22.4477 41 22 40.5523 22 40V20Z" fill="white" />
+  <path d="M26 23H34V27H26V23Z" fill="#4F46E5" />
+  <path d="M26 29H34V33H26V29Z" fill="#4F46E5" />
+  <path d="M26 35H34V37H26V35Z" fill="#4F46E5" />
+  <text x="55" y="30" font-family="Arial, sans-serif" font-weight="bold" font-size="14" fill="#4F46E5">School</text>
+  <text x="55" y="45" font-family="Arial, sans-serif" font-weight="bold" font-size="14" fill="#4F46E5">Manager</text>
+</svg>
+```
+
+### dashboard.svg
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+  <rect x="3" y="3" width="7" height="9" rx="2" />
+  <rect x="14" y="3" width="7" height="5" rx="2" />
+  <rect x="14" y="12" width="7" height="9" rx="2" />
+  <rect x="3" y="16" width="7" height="5" rx="2" />
+</svg>
+```
+
+### empty-state.svg
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect x="0" y="0" width="400" height="300" fill="#F5F7FF" rx="8" />
+  <rect x="120" y="100" width="160" height="120" fill="#4F46E5" />
+  <rect x="140" y="140" width="30" height="40" fill="#FFFFFF" />
+  <rect x="190" y="140" width="30" height="40" fill="#FFFFFF" />
+  <rect x="230" y="140" width="30" height="40" fill="#FFFFFF" />
+  <polygon points="120,100 200,60 280,100" fill="#312E81" />
+  <text x="200" y="270" font-family="Arial" font-size="18" font-weight="bold" fill="#1F2937" text-anchor="middle">No Data Available</text>
+</svg>
+```
+
+### active.svg
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <circle cx="12" cy="12" r="10" fill="#D1FAE5" />
+  <path d="M9 12l2 2 4-4" stroke="#10B981" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
+```
+
+### Add these files to your project
+
+To use these SVGs in your project:
+
+1. Create the directory structure as shown above
+2. Create each SVG file with its corresponding content
+3. Reference them in your components using standard image tags or appropriate React components
+
+Example React usage:
+```jsx
+import React from 'react';
+
+function Logo() {
+  return (
+    <img src="/assets/svg/logo/app-logo.svg" alt="School Manager" />
+  );
+}
+
+export default Logo;
+```
+
+For more advanced usage with SVG as components, consider using a library like `@svgr/webpack` or `react-svg` to import SVGs directly as React components.

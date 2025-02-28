@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 // Layouts
 import MainLayout from './layouts/MainLayout';
@@ -25,36 +25,25 @@ import ExpenseForm from './pages/ExpenseForm';
 import Reports from './pages/Reports';
 import Settings from './pages/Settings';
 import Profile from './pages/Profile';
+import NotFound from './pages/NotFound';
+import Unauthorized from './pages/Unauthorized';
+
+// User Management
 import UserManagement from './pages/UserManagement';
 import RolesPermissions from './pages/RolesPermissions';
-import NotFound from './pages/NotFound';
 
-// Auth context
-import { useAuth } from './contexts/AuthContext';
+// Protected Route Component
+import ProtectedRoute from './components/common/ProtectedRoute';
 
-// Protected Route component
-const ProtectedRoute = ({ requiredPermissions = [], redirectPath = '/dashboard', children }) => {
-  const { user, hasPermission } = useAuth();
-  
-  // If user is not authenticated, redirect to login
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-  
-  // If requiredPermissions is provided and user doesn't have one of the required permissions,
-  // redirect to specified redirectPath
-  if (
-    requiredPermissions.length > 0 &&
-    !requiredPermissions.every(permission => {
-      const [module, action] = permission.split('.');
-      return hasPermission(module, action);
-    })
-  ) {
-    return <Navigate to={redirectPath} replace />;
-  }
-  
-  // Render children or outlet
-  return children || <Outlet />;
+// Protection constants
+const PERMISSIONS = {
+  MANAGE_STUDENTS: 'students.manage',
+  MANAGE_PAYMENTS: 'payments.manage',
+  MANAGE_EXPENSES: 'expenses.manage',
+  VIEW_REPORTS: 'reports.view',
+  MANAGE_SETTINGS: 'settings.manage',
+  MANAGE_USERS: 'users.manage',
+  MANAGE_ROLES: 'roles.manage'
 };
 
 const Router = () => {
@@ -67,95 +56,122 @@ const Router = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Route>
-      
-      {/* Change Password Route (special case - accessible both as authenticated and first login) */}
+
+      {/* Change Password (Special Route) */}
       <Route path="/change-password" element={<ChangePassword />} />
-      
+
       {/* Main Application Routes */}
       <Route element={<MainLayout />}>
-        {/* Dashboard - accessible to all authenticated users */}
-        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        {/* Dashboard - Accessible to all authenticated users */}
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } />
         
-        {/* Student Routes */}
-        <Route
-          path="/students"
-          element={<ProtectedRoute requiredPermissions={['students.read']}><Students /></ProtectedRoute>}
-        />
-        <Route
-          path="/students/:id"
-          element={<ProtectedRoute requiredPermissions={['students.read']}><StudentDetail /></ProtectedRoute>}
-        />
-        <Route
-          path="/students/new"
-          element={<ProtectedRoute requiredPermissions={['students.create']}><StudentForm /></ProtectedRoute>}
-        />
-        <Route
-          path="/students/:id/edit"
-          element={<ProtectedRoute requiredPermissions={['students.update']}><StudentForm /></ProtectedRoute>}
-        />
+        {/* Student Routes - Requires student management permission */}
+        <Route path="/students" element={
+          <ProtectedRoute requiredPermission={PERMISSIONS.MANAGE_STUDENTS}>
+            <Students />
+          </ProtectedRoute>
+        } />
+        <Route path="/students/:id" element={
+          <ProtectedRoute requiredPermission={PERMISSIONS.MANAGE_STUDENTS}>
+            <StudentDetail />
+          </ProtectedRoute>
+        } />
+        <Route path="/students/new" element={
+          <ProtectedRoute requiredPermission={PERMISSIONS.MANAGE_STUDENTS}>
+            <StudentForm />
+          </ProtectedRoute>
+        } />
+        <Route path="/students/:id/edit" element={
+          <ProtectedRoute requiredPermission={PERMISSIONS.MANAGE_STUDENTS}>
+            <StudentForm />
+          </ProtectedRoute>
+        } />
         
-        {/* Payment Routes */}
-        <Route
-          path="/payments"
-          element={<ProtectedRoute requiredPermissions={['payments.read']}><Payments /></ProtectedRoute>}
-        />
-        <Route
-          path="/payments/:id"
-          element={<ProtectedRoute requiredPermissions={['payments.read']}><PaymentDetail /></ProtectedRoute>}
-        />
-        <Route
-          path="/payments/new"
-          element={<ProtectedRoute requiredPermissions={['payments.create']}><PaymentForm /></ProtectedRoute>}
-        />
-        <Route
-          path="/payments/:id/edit"
-          element={<ProtectedRoute requiredPermissions={['payments.update']}><PaymentForm /></ProtectedRoute>}
-        />
+        {/* Payment Routes - Requires payment management permission */}
+        <Route path="/payments" element={
+          <ProtectedRoute requiredPermission={PERMISSIONS.MANAGE_PAYMENTS}>
+            <Payments />
+          </ProtectedRoute>
+        } />
+        <Route path="/payments/:id" element={
+          <ProtectedRoute requiredPermission={PERMISSIONS.MANAGE_PAYMENTS}>
+            <PaymentDetail />
+          </ProtectedRoute>
+        } />
+        <Route path="/payments/new" element={
+          <ProtectedRoute requiredPermission={PERMISSIONS.MANAGE_PAYMENTS}>
+            <PaymentForm />
+          </ProtectedRoute>
+        } />
+        <Route path="/payments/:id/edit" element={
+          <ProtectedRoute requiredPermission={PERMISSIONS.MANAGE_PAYMENTS}>
+            <PaymentForm />
+          </ProtectedRoute>
+        } />
         
-        {/* Expense Routes */}
-        <Route
-          path="/expenses"
-          element={<ProtectedRoute requiredPermissions={['expenses.read']}><Expenses /></ProtectedRoute>}
-        />
-        <Route
-          path="/expenses/:id"
-          element={<ProtectedRoute requiredPermissions={['expenses.read']}><ExpenseDetail /></ProtectedRoute>}
-        />
-        <Route
-          path="/expenses/new"
-          element={<ProtectedRoute requiredPermissions={['expenses.create']}><ExpenseForm /></ProtectedRoute>}
-        />
-        <Route
-          path="/expenses/:id/edit"
-          element={<ProtectedRoute requiredPermissions={['expenses.update']}><ExpenseForm /></ProtectedRoute>}
-        />
+        {/* Expense Routes - Requires expense management permission */}
+        <Route path="/expenses" element={
+          <ProtectedRoute requiredPermission={PERMISSIONS.MANAGE_EXPENSES}>
+            <Expenses />
+          </ProtectedRoute>
+        } />
+        <Route path="/expenses/:id" element={
+          <ProtectedRoute requiredPermission={PERMISSIONS.MANAGE_EXPENSES}>
+            <ExpenseDetail />
+          </ProtectedRoute>
+        } />
+        <Route path="/expenses/new" element={
+          <ProtectedRoute requiredPermission={PERMISSIONS.MANAGE_EXPENSES}>
+            <ExpenseForm />
+          </ProtectedRoute>
+        } />
+        <Route path="/expenses/:id/edit" element={
+          <ProtectedRoute requiredPermission={PERMISSIONS.MANAGE_EXPENSES}>
+            <ExpenseForm />
+          </ProtectedRoute>
+        } />
         
-        {/* Report Routes */}
-        <Route
-          path="/reports"
-          element={<ProtectedRoute requiredPermissions={['reports.read']}><Reports /></ProtectedRoute>}
-        />
+        {/* Report Routes - Requires report viewing permission */}
+        <Route path="/reports" element={
+          <ProtectedRoute requiredPermission={PERMISSIONS.VIEW_REPORTS}>
+            <Reports />
+          </ProtectedRoute>
+        } />
         
-        {/* Settings Routes */}
-        <Route
-          path="/settings"
-          element={<ProtectedRoute requiredPermissions={['settings.update']}><Settings /></ProtectedRoute>}
-        />
+        {/* Settings & Profile */}
+        <Route path="/settings" element={
+          <ProtectedRoute requiredPermission={PERMISSIONS.MANAGE_SETTINGS}>
+            <Settings />
+          </ProtectedRoute>
+        } />
         
-        {/* User Management Routes */}
-        <Route
-          path="/users"
-          element={<ProtectedRoute requiredPermissions={['users.read']}><UserManagement /></ProtectedRoute>}
-        />
+        {/* Profile is accessible to all authenticated users */}
+        <Route path="/profile" element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        } />
         
-        {/* Roles & Permissions Routes */}
-        <Route
-          path="/roles"
-          element={<ProtectedRoute requiredPermissions={['users.update']}><RolesPermissions /></ProtectedRoute>}
-        />
+        {/* User Management - Requires user management permission */}
+        <Route path="/users" element={
+          <ProtectedRoute requiredPermission={PERMISSIONS.MANAGE_USERS}>
+            <UserManagement />
+          </ProtectedRoute>
+        } />
         
-        {/* Profile - accessible to all authenticated users */}
-        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        {/* Roles & Permissions - Requires role management permission */}
+        <Route path="/roles" element={
+          <ProtectedRoute requiredPermission={PERMISSIONS.MANAGE_ROLES}>
+            <RolesPermissions />
+          </ProtectedRoute>
+        } />
+        
+        {/* Access Denied Page */}
+        <Route path="/unauthorized" element={<Unauthorized />} />
       </Route>
 
       {/* Redirect to dashboard from root */}

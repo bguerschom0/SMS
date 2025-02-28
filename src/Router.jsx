@@ -52,7 +52,7 @@ const Router = () => {
       {/* Auth Routes */}
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Route>
@@ -119,11 +119,7 @@ const Router = () => {
             <Expenses />
           </ProtectedRoute>
         } />
-        <Route path="/expenses/:id" element={
-          <ProtectedRoute requiredPermission={PERMISSIONS.MANAGE_EXPENSES}>
-            <ExpenseDetail />
-          </ProtectedRoute>
-        } />
+
         <Route path="/expenses/new" element={
           <ProtectedRoute requiredPermission={PERMISSIONS.MANAGE_EXPENSES}>
             <ExpenseForm />

@@ -125,3 +125,80 @@ So far, we have:
 The School Management System provides a robust solution for school accounting needs with extensibility for broader school management. The modular architecture ensures that new features can be added easily as requirements evolve. The focus on user experience and clean design will make the system accessible to various users within the school environment.
 
 By following the outlined roadmap and next steps, the project will be completed according to requirements and provide significant value to the school's administrative processes.
+
+
+
+
+
+# Images Directory
+
+This directory contains all the image assets used in the application. 
+
+## Organization Structure
+
+Images are organized into the following categories:
+
+```
+images/
+│
+├── backgrounds/
+│   ├── login-bg.jpg
+│   └── dashboard-bg.jpg
+│
+├── placeholders/
+│   ├── student-placeholder.png
+│   └── avatar-placeholder.png
+│
+├── icons/
+│   └── ... (small raster images used as icons)
+│
+└── misc/
+    └── ... (other images that don't fit in the above categories)
+```
+
+## Usage Guidelines
+
+1. **Use SVGs when possible**: For icons and simple graphics, SVG files in the `public/assets/svg/` directory are preferred as they scale better.
+
+2. **Image optimization**: All images should be optimized for web use to minimize loading times:
+   - JPG/JPEG files for photographs and complex images with many colors
+   - PNG files for images requiring transparency
+   - WebP format is preferred when browser support is not a concern
+
+3. **Responsive images**: When using images in components, ensure they're responsive by using appropriate CSS:
+   ```css
+   img {
+     max-width: 100%;
+     height: auto;
+   }
+   ```
+
+4. **Lazy loading**: For images below the fold, consider using lazy loading:
+   ```jsx
+   <img src="..." loading="lazy" alt="..." />
+   ```
+
+5. **Appropriate sizing**: Resize images to the approximate dimensions they'll be displayed at to reduce bandwidth usage.
+
+6. **Accessibility**: Always include descriptive `alt` text for images for screen reader users:
+   ```jsx
+   <img src="..." alt="A detailed description of what the image shows" />
+   ```
+
+## Adding New Images
+
+When adding new images to the project:
+
+1. Choose the appropriate directory based on the image's purpose
+2. Optimize the image using tools like ImageOptim, TinyPNG, or Squoosh
+3. Use a descriptive filename that indicates the image's content
+4. Add the image to version control
+
+## Default Placeholders
+
+The placeholders directory contains default images used when actual images are unavailable:
+
+- `student-placeholder.png`: Used for student profiles without photos
+- `avatar-placeholder.png`: Used for user avatars when not specified
+
+These placeholder images should be generic and neutral in appearance.

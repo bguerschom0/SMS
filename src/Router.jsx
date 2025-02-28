@@ -20,7 +20,7 @@ import Payments from './pages/Payments';
 import PaymentDetail from './pages/PaymentDetail';
 import PaymentForm from './pages/PaymentForm';
 import Expenses from './pages/Expenses';
-import ExpenseDetail from './pages/ExpenseDetail';
+
 import ExpenseForm from './pages/ExpenseForm';
 import Reports from './pages/Reports';
 import Settings from './pages/Settings';
